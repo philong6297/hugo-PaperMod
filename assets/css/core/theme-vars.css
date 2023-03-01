@@ -1,8 +1,8 @@
 :root {
     --gap: 24px;
-    --content-gap: 20px;
+    --content-gap: 2rem;
     --nav-width: 1024px;
-    --main-width: 720px;
+    --main-width: 896px;
     --header-height: 60px;
     --footer-height: 60px;
     --radius: 8px;
@@ -15,6 +15,7 @@
     --hljs-bg: rgb(28, 29, 33);
     --code-bg: rgb(245, 245, 245);
     --border: rgb(238, 238, 238);
+    --link-color: rgb(21, 101, 192);
 }
 
 .dark {
@@ -27,6 +28,7 @@
     --hljs-bg: rgb(46, 46, 51);
     --code-bg: rgb(55, 56, 62);
     --border: rgb(51, 51, 51);
+    --link-color: rgb(66, 165, 245);
 }
 
 .list {
