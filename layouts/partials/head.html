@@ -55,9 +55,20 @@
 {{- $license_css := (resources.Get "css/core/license.css") }}
 {{- $common := (resources.Match "css/common/*.css") | resources.Concat "assets/css/common.css" }}
 
-{{- /* include `an-old-hope` if hljs is on */}}
+{{- /* include `style.scss` if hljs is on */}}
 {{- $isHLJSdisabled := (site.Params.assets.disableHLJS | default false) }}
-{{- $hljs := (cond ($isHLJSdisabled) (".chroma { background-color: unset !important;}" | resources.FromString "assets/css/hljs-blank.css") (resources.Get "css/hljs/an-old-hope.min.css")) }}
+{{- $hljs := (cond ($isHLJSdisabled)
+    (".chroma { background-color: unset !important;}"
+      | resources.FromString "assets/css/hljs-blank.css")
+    (resources.Get "sass/hljs/style.scss"
+      | resources.ToCSS (dict
+        "targetPath" "style.css"
+        "outputStyle" "compressed"
+        "enableSourceMap" (not hugo.IsProduction)
+        )
+    )
+  )
+}}
 
 {{- /* order is important */}}
 {{- $core := (slice $theme_vars $reset $common $hljs $includes_all $media) | resources.Concat "assets/css/core.css" | resources.Minify }}
