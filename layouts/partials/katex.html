@@ -1,0 +1,31 @@
+{{ $katex := .Params.katex }}
+{{ if $katex }}
+  {{/* Custom katex style per post */}}
+  {{ $styles := resources.Get "css/katex/katex.min.css" }}
+  {{ if $.Site.IsServer }}
+    <link id="katex-style" rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+  {{ else }}
+    {{ $styles := $styles | minify | fingerprint }}
+    <link id="katex-style" rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
+  {{ end }}
+
+  {{/* Custom katex js per post */}}
+  {{ $script := resources.Get "js/katex.min.js" }}
+  {{ if $.Site.IsServer }}
+      <script id="katex-scripts" src="{{ $script.RelPermalink }}"></script>
+    {{ else }}
+      {{ $script := $script | minify | fingerprint }}
+      <script id="katex-scripts" src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
+  {{ end }}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+  </script>
+
+{{ end }}
